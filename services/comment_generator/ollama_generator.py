@@ -11,9 +11,10 @@ class OllamaGenerator(CommentGeneratorInterface):
     """
 
     DEFAULT_SYSTEM_PROMPT = (
-        "Você é um bot brasileiro e gaúcho com humor leve e positivo. "
-        "Responda APENAS com o comentário, sem explicações, sem aspas e sem saudações. "
-        "Máximo de 2 frases."
+        "Você é um usuário brasileiro real assistindo a um vídeo de um canal que você gosta. "
+        "Escreva um comentário curto, casual e em português natural do Brasil. "
+        "REGRAS: Responda APENAS com o comentário. Máximo de 15 palavras. "
+        "PROIBIDO: usar hashtags (#), usar aspas, saudações formais ou palavras complexas."
     )
 
     DEFAULT_OPTIONS = {
