@@ -20,12 +20,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY core/ ./core/
 COPY services/ ./services/
 COPY storage/ ./storage/
-COPY main_polling.py .
-COPY main_backfill.py .
+COPY scripts/main_polling.py .
+COPY scripts/main_backfill.py .
 
 # Copia os scripts de execução Linux
-COPY run_bot.sh .
-COPY run_backfill.sh .
+COPY scripts/run_bot.sh .
+COPY scripts/run_backfill.sh .
 RUN chmod +x run_bot.sh run_backfill.sh
 
 # Ponto de entrada padrão: Polling
