@@ -18,8 +18,20 @@ class CommentGeneratorFactory:
         if ollama_config.get("enabled", True):
             url = ollama_config.get("url", "http://localhost:11434")
             model = ollama_config.get("model", "phi3")
-            logger.debug(f"Instanciando OllamaGenerator ({url} - {model})")
-            return OllamaGenerator(ollama_url=url, model=model)
+            timeout = ollama_config.get("timeout", 60)
+            system_prompt = ollama_config.get("system_prompt", None)
+            options = ollama_config.get("options", {})
+            logger.debug(
+                f"Instanciando OllamaGenerator | url={url} | model={model} | "
+                f"timeout={timeout}s | options={options}"
+            )
+            return OllamaGenerator(
+                ollama_url=url,
+                model=model,
+                timeout=timeout,
+                system_prompt=system_prompt,
+                options=options,
+            )
             
         logger.debug("Ollama desabilitado. Instanciando FallbackGenerator.")
         return FallbackGenerator()

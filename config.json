@@ -30,6 +30,15 @@
     "ollama": {
         "enabled": true,
         "url": "http://localhost:11434",
-        "model": "phi3"
+        "model": "phi3",
+        "timeout": 60,
+        "system_prompt": "Você é um bot brasileiro e gaúcho com humor leve e positivo. Responda APENAS com o comentário, sem explicações, sem aspas e sem saudações. Máximo de 2 frases.",
+        "options": {
+            "temperature": 0.8,
+            "num_predict": 100,
+            "num_ctx": 1024,
+            "top_k": 40,
+            "top_p": 0.9
+        }
     }
 }
