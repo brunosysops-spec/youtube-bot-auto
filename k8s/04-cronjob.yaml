@@ -4,21 +4,29 @@ metadata:
   name: youtube-bot
   namespace: youtube-bot
 spec:
-  # Roda de 1 em 1 minuto
-  schedule: "*/1 * * * *"
+  # Roda de 30 em 30 minuto
+  schedule: "*/30 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       backoffLimit: 1
       template:
         spec:
+          # --- Forcar DNS Para evitar erro de rede
+          dnsPolicy: "None"
+          dnsConfig:
+            nameservers:
+              - 8.8.8.8
+              - 1.1.1.1
           restartPolicy: OnFailure
           containers:
             - name: youtube-bot
               # Substitua "usuario/sua_imagem" pelo nome real no seu repo de imagens
-              image: brunosysops-spec/youtube-bot-auto:latest
+              image: brunosysops/youtube-bot-auto:v1
               imagePullPolicy: Always
-              command: ["python", "scripts/main_polling.py"]
+              command: ["sh", "-c", "mkdir -p /app/data && [ ! -s /app/data/comment_history.json ] && echo '{}' > /app/data/comment_history.json; ln -sf /app/data/comment_history.json /app/comment_history.json && ./run_bot.sh"]
+              #command: ["sh", "-c", "ln -sf /app/data/comment_history.json /app/comment_history.json && ./run_bot.sh"]
+              #command: ["python", "scripts/main_polling.py"]
               resources:
                 requests:
                   memory: "70Mi"
@@ -31,17 +39,17 @@ spec:
                 - name: PYTHONUNBUFFERED
                   value: "1"
               volumeMounts:
-                # Onde o history.json persistente será lido/escrito
                 - name: history-volume
-                  mountPath: /app/data
-                # Onde o script Python lerá o config.json modificado
+                  mountPath: /app/data/
                 - name: config-volume
                   mountPath: /app/config.json
                   subPath: config.json
-                # Onde as credenciais da API do google estarão (Secret vindo do passo 2 do README)
                 - name: secrets-volume
-                  mountPath: /app/secrets
-                  readOnly: true
+                  mountPath: /app/client_secret.json
+                  subPath: client_secret.json
+                - name: secrets-volume
+                  mountPath: /app/tokens.json
+                  subPath: tokens.json
           volumes:
             - name: history-volume
               persistentVolumeClaim:
