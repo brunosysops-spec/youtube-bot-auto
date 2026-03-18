@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: youtube-bot-config
+  namespace: youtube-bot
+data:
+  config.json: |
+    {
+        "channels": [
+            {
+                "channel_id": "UCfyZcaQhIugf7cEpk02Y4vQ",
+                "credentials_file": "/app/secrets/tokens.json",
+                "name": "HPB",
+                "enabled": true
+            },
+            {
+                "channel_id": "UCe4fHVV3A2vRowTmp04XuTA",
+                "credentials_file": "/app/secrets/tokens.json",
+                "name": "Chapado Critico Cortes",
+                "enabled": true
+            },
+            {
+                "channel_id": "UCzRvM45jcCvVFsxhbvSHp-Q",
+                "credentials_file": "/app/secrets/tokens.json",
+                "name": "De Sola",
+                "enabled": true
+            }
+        ],
+        "storage": {
+            "type": "json",
+            "filename": "/app/data/comment_history.json"
+        },
+        "comment_settings": {
+            "delay_between_channels": 60,
+            "max_comments_per_run": 5
+        },
+        "ollama": {
+            "enabled": true,
+            "url": "http://SEU_IP_DO_LXC:11434",
+            "model": "phi3"
+        }
+    }

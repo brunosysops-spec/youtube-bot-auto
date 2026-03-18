@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+tokens.json
+client_secret_*.json
+comment_history.json
+Backups/
+*git_creds_tmp*.txt
+ALEXANDREZINCO-client_secret*.json
+ALEXANDREZINCO-client_secret_70245442386-i9fl88g34n8d4anv863kmmcgh8u9c3oe.apps.googleusercontent.com.json

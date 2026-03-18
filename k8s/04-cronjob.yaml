@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: youtube-bot
+  namespace: youtube-bot
+spec:
+  # Roda de 1 em 1 minuto
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: youtube-bot
+              # Substitua "usuario/sua_imagem" pelo nome real no seu repo de imagens
+              image: brunosysops-spec/youtube-bot-auto:latest
+              imagePullPolicy: Always
+              command: ["python", "scripts/main_polling.py"]
+              resources:
+                requests:
+                  memory: "70Mi"
+                  cpu: "50m"
+                limits:
+                  memory: "200Mi"
+                  cpu: "250m"
+              env:
+                # Força os logs do Python a não ficarem no buffer (aparecerem instantaneamente no kubectl logs)
+                - name: PYTHONUNBUFFERED
+                  value: "1"
+              volumeMounts:
+                # Onde o history.json persistente será lido/escrito
+                - name: history-volume
+                  mountPath: /app/data
+                # Onde o script Python lerá o config.json modificado
+                - name: config-volume
+                  mountPath: /app/config.json
+                  subPath: config.json
+                # Onde as credenciais da API do google estarão (Secret vindo do passo 2 do README)
+                - name: secrets-volume
+                  mountPath: /app/secrets
+                  readOnly: true
+          volumes:
+            - name: history-volume
+              persistentVolumeClaim:
+                claimName: youtube-bot-history-pvc
+            - name: config-volume
+              configMap:
+                name: youtube-bot-config
+            - name: secrets-volume
+              secret:
+                secretName: youtube-bot-creds
+                optional: false
