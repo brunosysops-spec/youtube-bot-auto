@@ -22,7 +22,7 @@ spec:
           containers:
             - name: youtube-bot
               # Substitua "usuario/sua_imagem" pelo nome real no seu repo de imagens
-              image: brunosysops/youtube-bot-auto:v1
+              image: brunosysops/youtube-bot-auto:latest
               imagePullPolicy: Always
               command: ["sh", "-c", "mkdir -p /app/data && [ ! -s /app/data/comment_history.json ] && echo '{}' > /app/data/comment_history.json; ln -sf /app/data/comment_history.json /app/comment_history.json && ./run_bot.sh"]
               #command: ["sh", "-c", "ln -sf /app/data/comment_history.json /app/comment_history.json && ./run_bot.sh"]

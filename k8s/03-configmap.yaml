@@ -9,19 +9,19 @@ data:
         "channels": [
             {
                 "channel_id": "UCfyZcaQhIugf7cEpk02Y4vQ",
-                "credentials_file": "/app/secrets/tokens.json",
+                "credentials_file": "/app/tokens.json",
                 "name": "HPB",
                 "enabled": true
             },
             {
                 "channel_id": "UCe4fHVV3A2vRowTmp04XuTA",
-                "credentials_file": "/app/secrets/tokens.json",
+                "credentials_file": "/app/tokens.json",
                 "name": "Chapado Critico Cortes",
                 "enabled": true
             },
             {
                 "channel_id": "UCzRvM45jcCvVFsxhbvSHp-Q",
-                "credentials_file": "/app/secrets/tokens.json",
+                "credentials_file": "/app/tokens.json",
                 "name": "De Sola",
                 "enabled": true
             }
@@ -36,7 +36,7 @@ data:
         },
         "ollama": {
             "enabled": true,
-            "url": "http://SEU_IP_DO_LXC:11434",
-            "model": "phi3"
+            "url": "http://192.168.15.4:11434",
+            "model": "phi3:mini"
         }
     }
